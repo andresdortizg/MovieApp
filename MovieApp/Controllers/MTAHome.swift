@@ -1,6 +1,6 @@
 //
-//  RPIHome.swift
-//  RpiMovieApp
+//  MTAHome.swift
+//  MovieApp
 //
 //  Created by Andres Ortiz on 4/17/19.
 //  Copyright © 2019 Andres. All rights reserved.
@@ -9,7 +9,7 @@
 
 import UIKit
 
-class RPIHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MTAHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     private let cellId = "CustomMovieTableViewCell"
     
@@ -30,7 +30,7 @@ class RPIHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }()
     
     let svCategory : UISegmentedControl = {
-        let items = ["Popular", "Top Rated", "Upcoming"]
+        let items = ["Popular", "Top Rated"]
         let customSC = UISegmentedControl(items: items)
         customSC.selectedSegmentIndex = 0
         customSC.layer.cornerRadius = 5.0
@@ -139,7 +139,7 @@ class RPIHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.dataSource = self
         tableView.delegate = self
         
-        tableView.register(RpiCustomMovieTableCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(MTACustomMovieTableCell.self, forCellReuseIdentifier: cellId)
  
         self.view.addSubview(loader)
         
@@ -161,7 +161,7 @@ class RPIHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func fetchData(text: String){
         self.loader.isHidden = false
         self.loader.startAnimating()
-        RPIMovieLoader.shared.fetchMovies(kind: category!, page: page!, text: text){
+        MTAMovieLoader.shared.fetchMovies(kind: category!, page: page!, text: text){
             (result: [Movie], success) in
             if (success){
                 if (self.movies.count > 0){
@@ -200,7 +200,7 @@ class RPIHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     
     @objc func changeCategory(sender: UISegmentedControl) {
-        let isConnected = RPIReachability.shared.isConnected()
+        let isConnected = MTAReachability.shared.isConnected()
         if isConnected{
             self.txtSearch.text = ""
         }
@@ -220,8 +220,6 @@ class RPIHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 self.category = 1;
             case 1:
                 self.category = 2;
-            case 2:
-                self.category = 3;
             default:
                 self.category = 1;
         }
@@ -230,7 +228,7 @@ class RPIHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     @objc func searchWithText(sender: UIButton){
-        let isConnected = RPIReachability.shared.isConnected()
+        let isConnected = MTAReachability.shared.isConnected()
         if isConnected{
             svCategory.selectedSegmentIndex = UISegmentedControl.noSegment
         }
@@ -267,7 +265,7 @@ class RPIHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomMovieTableViewCell", for: indexPath) as! RpiCustomMovieTableCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomMovieTableViewCell", for: indexPath) as! MTACustomMovieTableCell
 
         let movie = movies[indexPath.row]
         
@@ -295,14 +293,14 @@ class RPIHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let movie = movies[indexPath.row]
-        let targetController =  RPIMovieDetailedViewController()
+        let targetController =  MTAMovieDetailedViewController()
         targetController.movie = movie
         self.navigationController?.pushViewController(targetController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
             let lastElement = movies.count - 1
-            let isConnected = RPIReachability.shared.isConnected()
+            let isConnected = MTAReachability.shared.isConnected()
             if !(isLoading!) && (indexPath.row == lastElement) && movies.count > 19 && isConnected  {
                 isLoading = true
                 page = page! + 1
