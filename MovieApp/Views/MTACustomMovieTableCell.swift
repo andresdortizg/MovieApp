@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 
-class RpiCustomMovieTableCell: UITableViewCell {
+class MTACustomMovieTableCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
