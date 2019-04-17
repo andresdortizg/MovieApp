@@ -18,7 +18,6 @@ class MTAHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var page: Int?
     var movies = [Movie]()
     var category : Int?
-    var animationStyle : UITableView.RowAnimation?
     let tableView: UITableView = UITableView()
     
     
@@ -71,7 +70,6 @@ class MTAHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
         self.isLoading = true
         self.page = 1
         self.category = 1
-        self.animationStyle = UITableView.RowAnimation.none
         self.navigationController?.navigationBar.topItem?.title = "Movie App"
         
         setupViews()
@@ -174,14 +172,8 @@ class MTAHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
                         self.tableView.reloadData()
                     }
                     else{
-                        if (self.movies.count == 20){
-                            self.movies = result
-                            self.tableView.reloadSections(IndexSet(integer: 0), with: self.animationStyle!)
-                        }
-                        else{
-                            self.movies = result
-                            self.tableView.reloadData()
-                        }
+                         self.movies = result
+                         self.tableView.reloadData()
                     }
                 }
                 else{
@@ -205,15 +197,6 @@ class MTAHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
             self.txtSearch.text = ""
         }
 
-        
-        if (sender.selectedSegmentIndex + 1 > self.category!)
-        {
-            self.animationStyle = UITableView.RowAnimation.left
-        }
-        else
-        {
-            self.animationStyle = UITableView.RowAnimation.right
-        }
         txtSearch.resignFirstResponder()
         switch sender.selectedSegmentIndex {
             case 0:

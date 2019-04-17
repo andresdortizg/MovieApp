@@ -16,7 +16,6 @@ class MTAMovieStorage {
     
     private(set) var popularMovies: [Movie]
     private(set) var topRatedMovies: [Movie]
-    private(set) var upcomingMovies: [Movie]
     private let fileManager: FileManager
     private let documentsURL: URL
     
@@ -27,16 +26,11 @@ class MTAMovieStorage {
     }
 
     
-    init() {
-        let fileManager = FileManager.default
-        self.documentsURL = try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        self.fileManager = fileManager
+    func loadDataFromFile() {
+        
+        
         var moviesFilesURLs : [URL]
         let jsonDecoder = JSONDecoder()
-        
-        self.popularMovies = [Movie]()
-        self.topRatedMovies = [Movie]()
-        self.upcomingMovies = [Movie]()
         
         if directoryExistsAtPath(documentsURL.appendingPathComponent("popular").path){
             moviesFilesURLs = try! fileManager.contentsOfDirectory(at: documentsURL.appendingPathComponent("popular"), includingPropertiesForKeys: nil)
@@ -72,24 +66,21 @@ class MTAMovieStorage {
         else{
             try? fileManager.createDirectory(at: documentsURL.appendingPathComponent("topRated"), withIntermediateDirectories: false, attributes: nil)
         }
+    }
+    
+    init() {
+        let fileManager = FileManager.default
+        self.documentsURL = try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        self.fileManager = fileManager
         
-        if directoryExistsAtPath(documentsURL.appendingPathComponent("upcoming").path){
-            moviesFilesURLs = try! fileManager.contentsOfDirectory(at: documentsURL.appendingPathComponent("upcoming"), includingPropertiesForKeys: nil)
-            upcomingMovies = moviesFilesURLs.compactMap { url -> Movie? in
-                guard !url.absoluteString.contains(".DS_Store") else {
-                    return nil
-                }
-                guard let data = try? Data(contentsOf: url) else {
-                    return nil
-                }
-                return try? jsonDecoder.decode(Movie.self, from: data)
-                }.sorted(by: { ($0.releaseDate ?? "") > ($1.releaseDate ?? "") })
-        }
-        else{
-            try? fileManager.createDirectory(at: documentsURL.appendingPathComponent("upcoming"), withIntermediateDirectories: false, attributes: nil)
-        }
+        self.popularMovies = [Movie]()
+        self.topRatedMovies = [Movie]()
+        
+        loadDataFromFile()
         
     }
+    
+    
     
     func saveAllOnDisk(movies : [Movie], category: String){
         for movie in movies{
@@ -118,21 +109,14 @@ class MTAMovieStorage {
             try? fileManager.removeItem(at: path)
         }
         
-        moviesFilesURLs = try! fileManager.contentsOfDirectory(at: documentsURL.appendingPathComponent("upcomingMovies"), includingPropertiesForKeys: nil)
-        for path in moviesFilesURLs {
-            try? fileManager.removeItem(at: path)
-        }
     }
     
     func retrieveArray(category: String) -> [Movie] {
         if (category == "popular"){
            return self.popularMovies
         }
-        else if (category == "topRated"){
-            return self.topRatedMovies
-        }
         else {
-            return self.upcomingMovies
+            return self.topRatedMovies
         }
     }
 }
