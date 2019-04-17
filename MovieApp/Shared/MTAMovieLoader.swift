@@ -6,12 +6,11 @@
 //  Copyright © 2019 Andres. All rights reserved.
 //
 
-
 import UIKit
 
 
-class RPIMovieLoader {
-    static let shared = RPIMovieLoader()
+class MTAMovieLoader {
+    static let shared = MTAMovieLoader()
     init() {}
     
     var movie : Movie? = nil
@@ -60,7 +59,7 @@ class RPIMovieLoader {
         
         movieSearchText = text
 
-        let isConnected = RPIReachability.shared.isConnected()
+        let isConnected = MTAReachability.shared.isConnected()
         
         movieCategoryPath = "popular"
         var category = "popular"
@@ -105,7 +104,7 @@ class RPIMovieLoader {
                         let search = try decoder.decode(Search.self, from: data!)
                         let movies = search.results
                         if(self.movieSearchText == ""){
-                            RPIMovieStorage.shared.saveAllOnDisk(movies: movies, category: self.movieCategoryPath!)
+                            MTAMovieStorage.shared.saveAllOnDisk(movies: movies, category: self.movieCategoryPath!)
                         }
                         completion(movies, true)
 
@@ -119,7 +118,7 @@ class RPIMovieLoader {
         }
         else
         {
-            let movieStorage = RPIMovieStorage.shared
+            let movieStorage = MTAMovieStorage.shared
             if(text != ""){
                 var movieArray = movieStorage.retrieveArray(category:self.movieCategoryPath!)
                 movieArray = movieArray.filter { $0.title.contains (text) }
