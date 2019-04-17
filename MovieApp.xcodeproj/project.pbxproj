@@ -23,6 +23,7 @@
 		3CFAB8832267CFFF0035AB73 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFAB8822267CFFF0035AB73 /* Constants.swift */; };
 		3CFAB8862267D0130035AB73 /* MTAHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFAB8842267D0130035AB73 /* MTAHome.swift */; };
 		3CFAB8872267D0130035AB73 /* MTAMovieDetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFAB8852267D0130035AB73 /* MTAMovieDetailedViewController.swift */; };
+		3CFAB8892267D8E00035AB73 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 3CFAB8882267D8E00035AB73 /* Podfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		3CFAB8822267CFFF0035AB73 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3CFAB8842267D0130035AB73 /* MTAHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTAHome.swift; sourceTree = "<group>"; };
 		3CFAB8852267D0130035AB73 /* MTAMovieDetailedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTAMovieDetailedViewController.swift; sourceTree = "<group>"; };
+		3CFAB8882267D8E00035AB73 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 		3CFAB84A2267C6EA0035AB73 = {
 			isa = PBXGroup;
 			children = (
+				3CFAB8882267D8E00035AB73 /* Podfile */,
 				3CFAB8552267C6EA0035AB73 /* MovieApp */,
 				3CFAB8542267C6EA0035AB73 /* Products */,
 			);
@@ -204,6 +207,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CFAB8892267D8E00035AB73 /* Podfile in Resources */,
 				3CFAB8612267C6EC0035AB73 /* LaunchScreen.storyboard in Resources */,
 				3CFAB85E2267C6EC0035AB73 /* Assets.xcassets in Resources */,
 			);
