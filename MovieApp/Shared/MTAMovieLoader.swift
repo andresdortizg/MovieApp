@@ -68,9 +68,6 @@ class MTAMovieLoader {
         case 2:
             category = "top_rated"
             movieCategoryPath = "topRated"
-        case 3:
-            category = "upcoming"
-            movieCategoryPath = "upcoming"
         default:
             category = "popular"
             movieCategoryPath = "popular"
@@ -81,12 +78,12 @@ class MTAMovieLoader {
         {
 
             
-            var url = NSURL(string: "https://api.themoviedb.org/3/movie/\(category)?api_key=30f03a109d382c80fe5ef86868633ff7&page=\(page)")
+            var url = NSURL(string: "https://api.themoviedb.org/3/movie/\(category)?api_key=34738023d27013e6d1b995443764da44&page=\(page)")
             
             if(text != "")
             {
                 let urledText = text.addingPercentEncoding(withAllowedCharacters: .alphanumerics)
-                url = NSURL(string: "https://api.themoviedb.org/3/search/movie?api_key=30f03a109d382c80fe5ef86868633ff7&page=\(page)&query=\(urledText ?? "")")
+                url = NSURL(string: "https://api.themoviedb.org/3/search/movie?api_key=34738023d27013e6d1b995443764da44&page=\(page)&query=\(urledText ?? "")")
             }
             
             let request = URLRequest(url: url! as URL)
@@ -119,6 +116,7 @@ class MTAMovieLoader {
         else
         {
             let movieStorage = MTAMovieStorage.shared
+            movieStorage.loadDataFromFile()
             if(text != ""){
                 var movieArray = movieStorage.retrieveArray(category:self.movieCategoryPath!)
                 movieArray = movieArray.filter { $0.title.contains (text) }
