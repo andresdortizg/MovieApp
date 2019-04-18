@@ -52,6 +52,7 @@ class MTAHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
        text.placeholder = "Write something and tab Search..."
        return text
     }()
+ 
     
     let btnSearch : UIButton = {
         let button = UIButton()
@@ -62,7 +63,52 @@ class MTAHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
         button.layer.cornerRadius = 5
         return button
     }()
+    
+    let imgPoster : UIImageView = {
+        let imgPoster = UIImageView()
+        imgPoster.frame = CGRect(x: 10, y: 10, width: 80, height: 120)
+        imgPoster.image = UIImage(named: "movieplaceholder")
+        
+        return imgPoster
+    }()
 
+    let lblTitle : UILabel = {
+        let label = UILabel()
+        label.text = "Title"
+        label.frame = CGRect(x: 100, y: 10, width:  UIScreen.main.bounds.width - 160, height: 30)
+        label.textAlignment = .left
+        return label
+    }()
+    
+    let lblOverview : UILabel = {
+        let label = UILabel()
+        label.text = "Overview"
+        label.frame = CGRect(x: 100, y: 50, width:  UIScreen.main.bounds.width - 110, height: 80)
+        label.textAlignment = .justified
+        label.numberOfLines = 0
+        return label
+    }()
+
+    let btnClosePreview : UIButton = {
+       let button = UIButton()
+       button.setTitleColor(.red, for: .normal)
+       button.backgroundColor = .white
+       button.setTitle("X", for: .normal)
+       button.frame = CGRect(x:  UIScreen.main.bounds.width - 40, y: 10, width: 30, height: 30)
+       button.layer.masksToBounds = true
+       button.layer.cornerRadius = 15
+       return button
+    }()
+    
+    let vPreview : UIView = {
+        let vPanel = UIView()
+        vPanel.backgroundColor = UIColor.groupTableViewBackground
+        vPanel.isHidden = true
+        return vPanel
+    }()
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -149,12 +195,32 @@ class MTAHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         loader.isHidden = true
         
+        
+        self.view.addSubview(vPreview)
+        
+        vPreview.translatesAutoresizingMaskIntoConstraints = false
+        vPreview.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        vPreview.leftAnchor.constraint(equalTo: margins.leftAnchor, constant: 0).isActive = true
+        vPreview.rightAnchor.constraint(equalTo: margins.rightAnchor, constant: 0).isActive = true
+        vPreview.heightAnchor.constraint(equalToConstant: 160).isActive = true
+        
+        vPreview.addSubview(imgPoster)
+        vPreview.addSubview(lblTitle)
+        vPreview.addSubview(lblOverview)
+        vPreview.addSubview(btnClosePreview)
     }
     
     func setupActions(){
         svCategory.addTarget(self, action: #selector(self.changeCategory(sender:)), for: .valueChanged)
         btnSearch.addTarget(self, action: #selector(self.searchWithText(sender:)), for: .touchUpInside)
+        btnClosePreview.addTarget(self, action: #selector(self.closePreview(sender:)), for: .touchUpInside)
     }
+    
+    @objc func closePreview(sender: UIButton){
+        vPreview.isHidden = true
+    }
+    
+    
     
     func fetchData(text: String){
         self.loader.isHidden = false
@@ -263,12 +329,34 @@ class MTAHome: UIViewController, UITableViewDataSource, UITableViewDelegate {
         else{
             cell.imgMoviePoster.image = UIImage.init(named: "movieplaceholder")
         }
+        
+        cell.btMoviePreview.tag = indexPath.row
+        cell.btMoviePreview.addTarget(self, action: #selector(self.openPreview(sender:)), for: .touchUpInside)
 
         cell.lblMovieTitle.text = movie.title
         cell.lblMovieOverview.text = movie.overview
         return cell
     }
     
+    @objc func openPreview(sender: UIButton){
+        vPreview.isHidden = false
+        let movie = movies[sender.tag]
+        
+        
+        if  ((movie.posterPath) != nil){
+            let url = URL(string: baseURL + movie.posterPath!)
+            let placeholderImage = UIImage(named: "movieplaceholder")!
+            imgPoster.sd_imageTransition = .fade
+            imgPoster.sd_internalSetImage(with: url, placeholderImage: placeholderImage, operationKey: nil, setImageBlock: nil, progress: nil)
+        }
+        else{
+            imgPoster.image = UIImage.init(named: "movieplaceholder")
+        }
+        
+        lblTitle.text = movie.title
+        lblOverview.text = movie.overview
+        
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120

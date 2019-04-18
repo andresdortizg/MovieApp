@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MovieApp/Controllers/MTAHome.swift"
-            timestampString = "577235833.3232369"
+            timestampString = "577290470.484273"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
             landmarkName = "fetchData(text:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MovieApp/Controllers/MTAHome.swift"
-            timestampString = "577235833.323325"
+            timestampString = "577290470.484857"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "fetchData(text:)"
             landmarkType = "7">
          </BreakpointContent>
