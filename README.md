@@ -13,6 +13,7 @@ Para persistencia se uso archivos .json con el FileManager. Al correr la app por
 Para la carga asincrona de imagenes se uso
 
 pod 'Alamofire', '~> 4.7'
+
 pod 'SDWebImage', '~> 4.0'
 
 Mejorando la experiencia de usuario y permitiendo guardar en cache las imagenes hasta un limite de 10MB. Pudiendo asi ver las imagenes incluso sin conexion a internet.
@@ -30,10 +31,10 @@ Este helper permite detectar si hay conexión a internet y de cual tipo. tambien
 
 Se crearon 3 singletone para su uso en toda la App
 
-RPIMovieLoader para cargar data
+MTAMovieLoader para cargar data
 
-RPIMovieStorage para la persistencia
+MTAMovieStorage para la persistencia
 
-RPIReachability para determinar la conexion a internet.
+MTAReachability para determinar la conexion a internet.
 
 
